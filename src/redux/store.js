@@ -4,8 +4,7 @@ import { itemsHandler } from "./reducers";
 
 const store = configureStore({
   reducer: {
-      items: itemsHandler,
-      filter: ''
+      contacts: itemsHandler,
     }
   },
 );
