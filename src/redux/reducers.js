@@ -1,20 +1,34 @@
 import { createReducer } from "@reduxjs/toolkit";
 import { SAVE, DELETE, REFRESH } from "./action";
 
-const initialItems = [];
-const initialFilter = "";
+const initialItems = {
+  items: [],
+  filter: '',
+};
+
 
 const itemsHandler = createReducer(initialItems, {
-  [SAVE]: (state, action) => [...state, action.payload],
-    [DELETE]: (state, action) => [...state.filter(function (mainElement) {
-        return action.payload.filter(function (secElement) {
-            return mainElement.id == secElement.id;
-      }).length == 0
-  })],
+  [SAVE]: (state, action) => ({
+    ...state,
+    items: [...state.items, action.payload],
+  }),
+  [DELETE]: (state, action) => ({
+    ...state,
+    items: state.items.filter(function (array_el) {
+      return (
+        action.payload.filter(function (anotherOne_el) {
+          return anotherOne_el.id == array_el.id;
+        }).length == 0
+      );
+    }),
+  }),
+  [REFRESH]: (state, action) => ({
+    ...state,
+    filter: action.payload,
+  }),
 });
 
-const filterHandler = createReducer(initialFilter, {
-    [REFRESH]: (state, action) => [...state, action.payload]
-})
 
-export {itemsHandler}
+
+export { itemsHandler }
+
